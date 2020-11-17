@@ -1,24 +1,59 @@
-import logo from './logo.svg';
 import './App.css';
+import React from 'react';
+import Select from 'react-select';
+import UITable from './components/UITable';
+import Styles from './styles/Styles';
+import UICheckbox from './components/UICheckbox';
 
 function App() {
+  const typeDocuments = [
+    { value: 'chocolate', label: 'Chocolate' },
+    { value: 'strawberry', label: 'Strawberry' },
+    { value: 'vanilla', label: 'Vanilla' }
+  ]
+  
+  const columns = React.useMemo(
+    () => [
+      {
+        Header: 'Каталог/файл',
+        accessor: 'file'
+      },
+      {
+        Header: 'Вид документа',
+        accessor: 'some',
+        Cell: <Select options= {typeDocuments}/>
+      },
+      {
+        Header: 'Долг/должник',
+        accessor: 'dolg',
+      },
+      {
+        Header: 'Читаемый',
+        accessor: 'readed',
+        Cell: <UICheckbox bool = {false}/>
+      },
+      {
+        Header: 'Доп.проверка',
+        accessor: 'needCheck',
+        Cell: <UICheckbox bool = {false}/>
+      }
+      
+    ]
+  )
+  const data = React.useMemo(() => [{
+    file: 'file',
+    dolg: 'firstName',
+    readed: 22,
+    needCheck: true,
+    some: 'some'
+  }], [])
+
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Styles>
+      <UITable columns={columns} data={data} />
+    </Styles>
   );
 }
 
